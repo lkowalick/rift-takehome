@@ -4,7 +4,7 @@ import FieldMapping from "./components/field-mapping"
 
 export default function Home() {
   return (
-    <main >
+    <main>
       <div className="grid place-items-center mt-20">
         <div className="grid grid-cols-layout">
           <div>rift</div>
