@@ -11,6 +11,14 @@ const config: Config = {
       'sans': ['"Open Sans"']
     },
     extend: {
+      colors: {
+        transparent: 'transparent',
+        current: 'currentColor',
+        'accent': '#348AF3',
+      },
+      gridTemplateColumns: {
+        'layout': '240px 36px 240px',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
