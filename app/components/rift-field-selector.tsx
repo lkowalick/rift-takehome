@@ -46,6 +46,6 @@ const riftFields = [
     "label": "Campaign Name"
     },
 ]
-export default function RiftFieldSelector({ className = '' }) {
-    return <FieldSelector className={className} items={riftFields}/>;
+export default function RiftFieldSelector({ className = '', value, onChange }: { className?: string, value: string, onChange: (value: string) => void }) {
+    return <FieldSelector className={className} items={riftFields} value={value} onChange={onChange} />;
 }

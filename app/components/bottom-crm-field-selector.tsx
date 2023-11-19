@@ -351,6 +351,6 @@ const bottomCrmFields = [
     }
 ]
 
-export default function BottomCrmFieldSelector({ className = '' }) {
-    return <FieldSelector className={className} items={bottomCrmFields} />;
+export default function BottomCrmFieldSelector({ className = '', value, onChange }: { className?: string, value: string, onChange: (value: string) => void }) {
+    return <FieldSelector className={className} items={bottomCrmFields} value={value} onChange={onChange} />;
 }

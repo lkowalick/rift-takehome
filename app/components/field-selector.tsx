@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react"
+import { EventHandler, Fragment, useState } from "react"
 import { Combobox, Transition } from '@headlessui/react'
 import Image from "next/image"
 
@@ -7,8 +7,7 @@ interface Item {
     label: string;
 }
 
-export default function FieldSelector({ className = '', items }: {className: string, items: Item[] }) {
-      const [selected, setSelected] = useState(items[0])
+export default function FieldSelector({ className = '', items, value, onChange }: {className: string, items: Item[], value: string, onChange: (value: string) => void }) {
       const [query, setQuery] = useState('')
     
       const filteredPeople =
@@ -23,7 +22,7 @@ export default function FieldSelector({ className = '', items }: {className: str
     
       return (
         <div className={`w-60 ${className}`}>
-          <Combobox value={selected} onChange={setSelected}>
+          <Combobox value={value} onChange={onChange}>
             <div className="relative mt-1">
               <div className="relative w-full cursor-default overflow-hidden  bg-white text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                 <Combobox.Input

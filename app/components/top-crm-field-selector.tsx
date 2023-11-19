@@ -163,6 +163,6 @@ const TopCrmFields = [
     }
 ]
 
-export default function TopCrmFieldSelector({ className = '' }) {
-    return <FieldSelector className={className} items={TopCrmFields} />;
+export default function TopCrmFieldSelector({ className = '', value, onChange }: { className?: string, value: string, onChange: (value: string) => void }) {
+    return <FieldSelector className={className} items={TopCrmFields} value={value} onChange={onChange} />;
 }
