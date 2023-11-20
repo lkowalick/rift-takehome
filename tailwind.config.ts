@@ -17,7 +17,7 @@ const config: Config = {
         'accent': '#348AF3',
       },
       gridTemplateColumns: {
-        'layout': '240px 36px 240px',
+        'layout': '240px auto 240px',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
