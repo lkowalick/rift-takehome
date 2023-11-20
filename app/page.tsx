@@ -23,7 +23,7 @@ export default function Home() {
   }
 
   async function handleSubmission() {
-    await axios.post('http://www.httpbin.org/post', {data: prepareStateForSubmission(fieldMaps)})
+    await axios.post('https://www.httpbin.org/post', {data: prepareStateForSubmission(fieldMaps)})
     console.log("SUCCESS");
     router.push("/submitted");
   }
