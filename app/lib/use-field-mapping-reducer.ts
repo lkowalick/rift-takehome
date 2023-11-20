@@ -66,7 +66,6 @@ function fieldMappingReducer({ formIsValid, fieldMaps }: FieldMappingState, acti
             return validate(nextFieldMaps);
         default:
             throw new Error('Unknown action type');
-
     }
 }
 

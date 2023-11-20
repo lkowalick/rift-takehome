@@ -8,6 +8,12 @@ interface FieldMappingSubmissionData {
 
 export default function prepareStateForSubmission(fieldMaps: FieldMap[]): FieldMappingSubmissionData[] {
     return fieldMaps.map(({ riftField, topCrmField, bottomCrmField }) => {
-        return { riftField: riftField.value.id, topCrmField: topCrmField.value.id, bottomCrmField: bottomCrmField.value.id }
-    }).filter(({ riftField, topCrmField, bottomCrmField }) => [riftField, topCrmField, bottomCrmField].every((value) => value !== ''));
+        return {
+            riftField: riftField.value.id,
+            topCrmField: topCrmField.value.id,
+            bottomCrmField: bottomCrmField.value.id
+        }
+    }).filter(({ riftField, topCrmField, bottomCrmField }) => {
+        return [riftField, topCrmField, bottomCrmField].every((value) => value !== '')
+    });
 }

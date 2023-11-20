@@ -28,8 +28,6 @@ export default function Home() {
     router.push("/submitted");
   }
 
-  const submitEnabled = formIsValid;
-
   return (
     <div className="grid grid-cols-layout gap-y-6">
       <div className="col-span-2">rift</div>
@@ -39,7 +37,7 @@ export default function Home() {
         <AddButton onClick={() => dispatch({ type: "add" })} />
       </div>
       <div className="col-span-3 flex justify-end">
-        <SubmitButton onClick={handleSubmission} disabled={!submitEnabled} />
+        <SubmitButton onClick={handleSubmission} disabled={!formIsValid} />
       </div>
     </div>
   );
