@@ -25,12 +25,12 @@ export default function FieldSelector({ items, fieldData: { value, valid }, onCh
       )
 
   return (
-    <div className="w-60">
+    <div className="w-full">
       <Combobox value={value} onChange={onChange}>
         <div className="relative">
           <div className="relative w-full cursor-default overflow-hidden  bg-white text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
             <Combobox.Input
-              className={`w-full border border-solid ${valid ? 'border-slate-300' : 'border-orange-500'} truncate border- py-2 rounded-lg pl-3 text-sm leading-5 text-gray-900 focus:ring-0`}
+              className={`w-full border border-solid ${valid ? 'border-slate-300' : 'border-orange-500'} truncate border- py-2 rounded-lg pl-3 pr-6 text-sm leading-5 text-gray-900 focus:ring-0`}
               displayValue={(item: Item) => item.label}
               onChange={(event) => setQuery(event.target.value)}
             />

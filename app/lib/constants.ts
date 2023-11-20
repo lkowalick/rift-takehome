@@ -19,4 +19,3 @@ export type FieldNames = 'riftField' | 'topCrmField' | 'bottomCrmField';
 export const NullItem: Item = { id: '', label: '' }
 
 export const NullField: FieldData = { value: NullItem, valid: true }
-
