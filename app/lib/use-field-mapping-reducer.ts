@@ -1,29 +1,27 @@
 import { useReducer } from "react"
-import { FieldData, FieldMap, NullField } from "./constants"
+import { FieldData, FieldMap, FieldNames, NullField } from "./constants"
 
 const initialFieldMap = { riftField: NullField, topCrmField: NullField, bottomCrmField: NullField }
 
-type State = { fieldMaps: FieldMap[], valid: boolean };
+export type FieldMappingState = { fieldMaps: FieldMap[], formIsValid: boolean };
 
 type FieldMappingAction =
     | { type: "add" }
     | { type: "update", index: number, value: FieldMap }
     | { type: "delete", index: number }
-    | { type: "validate" }
 
-type FieldNames = 'riftField' | 'topCrmField' | 'bottomCrmField';
 
-function IdIsUniqueForField(fieldMap: FieldMap, fieldName: FieldNames, fieldMaps: FieldMap[]) {
+function idIsUniqueForField(fieldMap: FieldMap, fieldName: FieldNames, fieldMaps: FieldMap[]) {
     const idToFind = fieldMap[fieldName].value.id;
     return fieldMaps.map(({ [fieldName]: { value: { id } } }) => id).filter((id) => id !== '' && id === idToFind).length <= 1
 }
 
-function FieldPresentIfNeeded(fieldToCheck: FieldData, allFields: FieldData[]) {
+function fieldPresentIfNeeded(fieldToCheck: FieldData, allFields: FieldData[]) {
     return fieldToCheck.value.id !== '' || allFields.every(({ value: { id } }) => id === '')
 }
 
 function validateField(fieldMap: FieldMap, fieldName: FieldNames, fieldMaps: FieldMap[]) {
-    return IdIsUniqueForField(fieldMap, fieldName, fieldMaps) && FieldPresentIfNeeded(fieldMap[fieldName], Object.values(fieldMap))
+    return idIsUniqueForField(fieldMap, fieldName, fieldMaps) && fieldPresentIfNeeded(fieldMap[fieldName], Object.values(fieldMap))
 }
 
 function validateFields(fieldMap: FieldMap, fieldMaps: FieldMap[]) {
@@ -34,8 +32,9 @@ function validateFields(fieldMap: FieldMap, fieldMaps: FieldMap[]) {
     }
 }
 
-function validate(fieldMaps: FieldMap[]): State {
+function validate(fieldMaps: FieldMap[]): FieldMappingState {
     const newFieldMaps = [...fieldMaps];
+    let newFormIsValid = fieldMaps.some(({ riftField }) => riftField.value.id !== '');
     fieldMaps.forEach((fieldMap, i) => {
         const { riftField, topCrmField, bottomCrmField } = fieldMap
         const { riftFieldValid, topCrmFieldValid, bottomCrmFieldValid } = validateFields(fieldMap, fieldMaps)
@@ -45,15 +44,17 @@ function validate(fieldMaps: FieldMap[]): State {
             topCrmField: { value: topCrmField.value, valid: topCrmFieldValid },
             bottomCrmField: { value: bottomCrmField.value, valid: bottomCrmFieldValid },
         }
+        if (!riftFieldValid || !topCrmFieldValid || !bottomCrmFieldValid) {
+            newFormIsValid = false
+        }
     });
-    const newValid = fieldMaps.some(({ riftField, topCrmField, bottomCrmField }) => riftField.value.id !== '' && topCrmField.value.id !== '' && bottomCrmField.value.id !== '') && newFieldMaps.every(({ riftField, topCrmField, bottomCrmField }) => riftField.valid && topCrmField.valid && bottomCrmField.valid);
-    return { valid: newValid, fieldMaps: newFieldMaps }
+    return { formIsValid: newFormIsValid, fieldMaps: newFieldMaps }
 }
 
-function fieldMappingReducer({ valid, fieldMaps }: State, action: FieldMappingAction): State {
+function fieldMappingReducer({ formIsValid, fieldMaps }: FieldMappingState, action: FieldMappingAction): FieldMappingState {
     switch (action.type) {
         case "add": {
-            return { valid, fieldMaps: [...fieldMaps, initialFieldMap] };
+            return { formIsValid, fieldMaps: [...fieldMaps, initialFieldMap] };
         }
         case "update": {
             const nextFieldMaps = [...fieldMaps];
@@ -70,5 +71,5 @@ function fieldMappingReducer({ valid, fieldMaps }: State, action: FieldMappingAc
 }
 
 export default function useFieldMappingReducer() {
-    return useReducer(fieldMappingReducer, { fieldMaps: [initialFieldMap], valid: false });
+    return useReducer(fieldMappingReducer, { fieldMaps: [initialFieldMap], formIsValid: false });
 }

@@ -3,7 +3,15 @@ import { Combobox, Transition } from '@headlessui/react'
 import Image from "next/image"
 import { Item, FieldData } from "../lib/constants"
 
-export default function FieldSelector({ items, fieldData: { value, valid }, onChange }: { items: Item[], fieldData: FieldData, onChange: (value: Item) => void }) {
+interface FieldSelectorProps {
+  items: Item[];
+  fieldData: FieldData;
+  onChange: (value: Item) => void;
+}
+
+export type FieldSelectorWithoutOptionsProps = Omit<FieldSelectorProps, 'items'>
+
+export default function FieldSelector({ items, fieldData: { value, valid }, onChange }: FieldSelectorProps) {
   const [query, setQuery] = useState('')
 
   const filteredPeople =

@@ -16,7 +16,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <main>
+          <div className="grid place-items-center mt-20">{children}</div>
+        </main>
+      </body>
     </html>
   )
 }

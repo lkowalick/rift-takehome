@@ -2,7 +2,7 @@ import Image from "next/image";
 import RiftFieldSelector from "./rift-field-selector";
 import TopCrmFieldSelector from "./top-crm-field-selector";
 import BottomCrmFieldSelector from "./bottom-crm-field-selector";
-import { FieldMap, Item } from "../lib/constants";
+import { FieldMap, FieldNames, Item } from "../lib/constants";
 import DeleteButton from "./delete-button";
 
 interface FieldMappingProps {
@@ -12,7 +12,7 @@ interface FieldMappingProps {
 }
 
 export default function FieldMapping({ fieldMap, onChange, onDelete }: FieldMappingProps) {
-    function fieldOnChangeHandler(fieldName: 'riftField' | 'bottomCrmField' | 'topCrmField') {
+    function fieldOnChangeHandler(fieldName: FieldNames) {
         return (value: Item) => {
             const newField = { ...fieldMap[fieldName], value }
             onChange({ ...fieldMap, [fieldName]: newField })
