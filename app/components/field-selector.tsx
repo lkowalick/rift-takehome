@@ -1,13 +1,9 @@
-import { EventHandler, Fragment, useState } from "react"
+import { Fragment, useState } from "react"
 import { Combobox, Transition } from '@headlessui/react'
 import Image from "next/image"
+import { Item, FieldData } from "../lib/constants"
 
-interface Item {
-    id: string;
-    label: string;
-}
-
-export default function FieldSelector({ className = '', items, value, onChange }: {className: string, items: Item[], value: string, onChange: (value: string) => void }) {
+export default function FieldSelector({ className = '', items, fieldData: {value, valid}, onChange }: {className: string, items: Item[], fieldData: FieldData, onChange: (value: Item) => void }) {
       const [query, setQuery] = useState('')
     
       const filteredPeople =
@@ -26,7 +22,7 @@ export default function FieldSelector({ className = '', items, value, onChange }
             <div className="relative mt-1">
               <div className="relative w-full cursor-default overflow-hidden  bg-white text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                 <Combobox.Input
-                  className="w-full border border-solid border-slate-300 py-2 rounded-lg pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
+                  className={`w-full border border-solid ${valid ? 'border-slate-300' : 'border-orange-500'} border- py-2 rounded-lg pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0`}
                   displayValue={(item: Item) => item.label}
                   onChange={(event) => setQuery(event.target.value)}
                 />
@@ -52,7 +48,7 @@ export default function FieldSelector({ className = '', items, value, onChange }
                         key={item.id}
                         className={({ active }) =>
                           `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                            active ? 'bg-teal-600 text-white' : 'text-gray-900'
+                            active ? 'bg-accent text-white' : 'text-gray-900'
                           }`
                         }
                         value={item}
@@ -69,7 +65,7 @@ export default function FieldSelector({ className = '', items, value, onChange }
                             {selected ? (
                               <span
                                 className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                                  active ? 'text-white' : 'text-teal-600'
+                                  active ? 'text-white' : 'text-accent'
                                 }`}
                               >
                                 ✓
