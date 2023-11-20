@@ -1,14 +1,18 @@
 'use client'
 
+import axios from "axios";
 import AddButton from "./components/add-button";
 import FieldMappings from "./components/field-mappings"
 import SubmitButton from "./components/submit-button";
 import { FieldMap } from "./lib/constants";
+import prepareStateForSubmission from "./lib/prepare-state-for-submission";
 
 import useFieldMappingReducer from "./lib/use-field-mapping-reducer";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [{ formIsValid, fieldMaps }, dispatch] = useFieldMappingReducer();
+  const router = useRouter();
 
   function fieldMappingChangeHandler(index: number, value: FieldMap) {
     dispatch({ type: "update", index, value });
@@ -16,6 +20,12 @@ export default function Home() {
 
   function fieldMappingDeleteHandler(index: number) {
     dispatch({ type: "delete", index });
+  }
+
+  async function handleSubmission() {
+    await axios.post('http://www.httpbin.org/post', {data: prepareStateForSubmission(fieldMaps)})
+    console.log("SUCCESS");
+    router.push("/submitted");
   }
 
   const submitEnabled = formIsValid;

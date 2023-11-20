@@ -23,6 +23,12 @@ export default function FieldMappings({ fieldMaps, onChange, onDelete }: FieldMa
     }
 
     return (
-        fieldMaps.map((fieldMap, i) => <FieldMapping fieldMap={fieldMap} onChange={handleFieldMappingChange(i)} onDelete={handleFieldMappingDelete(i)} key={i} />)
+        fieldMaps.map((fieldMap, i) => {
+            return <FieldMapping
+                fieldMap={fieldMap}
+                onChange={handleFieldMappingChange(i)}
+                onDelete={handleFieldMappingDelete(i)}
+                key={i} />
+        })
     )
 }
